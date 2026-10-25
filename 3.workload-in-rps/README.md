@@ -10,7 +10,7 @@ Instead of modeling the workload in terms of users, let's use the observed traff
 
 For simplicity, we'll:
 - Set a shorter test duration of `10s`.
-- Use the [`constant-arrival-rate` executor](https://grafana.com/docs/k6/latest/using-k6/scenarios/executors/constant-arrival-rate/) to generate a constant (no ramping) iteration rate.
+- Use the [`constant-arrival-rate`](https://grafana.com/docs/k6/latest/using-k6/scenarios/executors/constant-arrival-rate/) executor to generate a constant (no ramping) iteration rate.
 
 ```js
 export const options = {
