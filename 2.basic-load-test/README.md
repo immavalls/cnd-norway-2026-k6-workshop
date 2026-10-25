@@ -45,7 +45,12 @@ k6 run --out web-dashboard k6-test.js
 docker compose exec k6 k6 run --out web-dashboard k6-test.js
 ```
 
-The `--out web-dashboard` option displays metrics in a simple web dashboard so you can watch test results in real time. Visit [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/).
+The `--out web-dashboard` option displays metrics in a simple web dashboard so you can watch test results in real time. Open the dashboard as soon as the test starts:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
+
+The dashboard is only available while the test is running. If the page doesn't load (for example, `connection reset`), the test has already finished: run it again and open the dashboard right away.
 
 ![k6 web dashboard](./images/k6-web-dashboard.png)
 
