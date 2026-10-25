@@ -136,10 +136,10 @@ The result looks like this:
 
 ## Optional: explore with Grafana Assistant
 
-This step is optional. You can connect your local Grafana to [Grafana Assistant](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/) in Grafana Cloud, the tool we used to generate the PostgreSQL dashboard, and ask it questions about your k6 and PostgreSQL metrics.
+This step is optional. You can connect your local Grafana to [Grafana Assistant](https://grafana.com/docs/grafana-cloud/platform/grafana-assistant/get-started/self-managed/) in Grafana Cloud, the tool we used to generate the PostgreSQL dashboard, and ask it questions about your k6 and PostgreSQL metrics.
 
 1. Create a [free Grafana Cloud account](https://grafana.com/auth/sign-up/create-user) if you don't have one. The free tier includes Grafana Assistant. See the [pricing page](https://grafana.com/pricing/#grafana-assistant) for the usage limits.
-2. Follow the documentation: [Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/). You'll install the Grafana Assistant plugin in your local Grafana ([localhost:3000](http://localhost:3000/)) and connect it to your Grafana Cloud stack. The local Grafana in this workshop meets the version requirement.
+2. Follow the documentation: [Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/platform/grafana-assistant/get-started/self-managed/). You'll install the Grafana Assistant plugin in your local Grafana ([localhost:3000](http://localhost:3000/)) and connect it to your Grafana Cloud stack. The local Grafana in this workshop meets the version requirement.
 
 > The connection flow sends your local Grafana URL to Grafana Cloud. Skip this step if you prefer not to share it.
 
@@ -151,7 +151,7 @@ No Grafana Cloud account? Explore [play.grafana.org](https://play.grafana.org/),
 - [k6 Documentation: Test lifecycle](https://grafana.com/docs/k6/latest/using-k6/test-lifecycle/)
 - [k6 Documentation: Built-in metrics](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/)
 - [k6 Documentation: Send k6 results to Prometheus](https://grafana.com/docs/k6/latest/results-output/real-time/prometheus-remote-write/)
-- [Grafana Assistant Documentation: Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/) (requires a Free Grafana Cloud account).
+- [Grafana Assistant Documentation: Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/platform/grafana-assistant/get-started/self-managed/) (requires a Free Grafana Cloud account).
 
 
 ---
