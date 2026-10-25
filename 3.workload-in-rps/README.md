@@ -9,7 +9,7 @@ We've observed that our QuickPizza service handles around **30 requests per seco
 Instead of modeling the workload in terms of users, let's use the observed traffic value to generate a workload of **30 requests per second**.
 
 For simplicity, we'll:
-- Set a shorter test duration of `10s`.
+- Set the test duration to `2m`, long enough to watch the workload in the dashboard.
 - Use the [`constant-arrival-rate`](https://grafana.com/docs/k6/latest/using-k6/scenarios/executors/constant-arrival-rate/) executor to generate a constant (no ramping) iteration rate.
 
 Update the `k6-test.js` file at the root of the repository with the following options, and fill in the missing values:
@@ -58,19 +58,19 @@ Open the web dashboard while the test is running:
 You can verify the generated workload in the terminal output:
 
 ```bash
-running (10.2s), 000/50 VUs, 300 complete and 0 interrupted iterations
-default ✓ [======================================] 000/50 VUs  10s  30.00 iters/s
+running (02m00.2s), 000/50 VUs, 3600 complete and 0 interrupted iterations
+default ✓ [======================================] 000/50 VUs  2m0s  30.00 iters/s
 
 ...
 
 # number of HTTP requests and HTTP request per second
-http_reqs......................: 301    29.389678/s
+http_reqs......................: 3601   29.9/s
 
 # number of script iterations and iterations per second
-iterations.....................: 301    29.389678/s
+iterations.....................: 3601   29.9/s
 ```
 
-On the **default ✓** row, `30.00 iters/s` indicates the iteration rate configured with the `constant-arrival-rate` executor.
+The exact numbers will differ slightly on your machine. On the **default ✓** row, `30.00 iters/s` indicates the iteration rate configured with the `constant-arrival-rate` executor.
 
 ⚠️ Do `http_reqs` and `iterations` report significantly lower rates than the configured `30 iters/s`?
 

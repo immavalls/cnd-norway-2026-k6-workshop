@@ -8,7 +8,7 @@ export const options = {
       executor: "constant-arrival-rate",
 
       // string: How long the test lasts
-      duration: "10s",
+      duration: "2m",
 
       // integer: Iteration rate, the number of iterations to start during each `timeUnit` period
       rate: 30,

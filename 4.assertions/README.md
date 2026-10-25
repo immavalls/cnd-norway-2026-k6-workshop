@@ -58,16 +58,16 @@ Open the web dashboard while the test is running:
 
 Verify the output in the terminal:
 
-- The check should report roughly 95% successful responses and appear with a ❌ status.
+- The test runs for 2 minutes. The check should report roughly 95% successful responses and appear with a ❌ status.
 - The test should complete successfully and k6 returns a zero exit code.
 
 ```bash
     ✗ status is 200
-      ↳  95% — ✓ 288 / ✗ 13
+      ↳  95% — ✓ 3420 / ✗ 180
 
 ...
 
-default ✓ [======================================] 00/50 VUs  10s  30.00 iters/s
+default ✓ [======================================] 00/50 VUs  2m0s  30.00 iters/s
 ```
 
 Now, add a [k6 threshold](https://grafana.com/docs/k6/latest/using-k6/thresholds/) to verify that at least 95% of responses complete in under 1 second. 
@@ -86,7 +86,7 @@ After the test finishes, check the `http_req_duration` results. The test should 
 ...
 http_req_duration..............: avg=1.13s min=1s med=1.1s max=1.65s p(90)=1.26s p(95)=1.34s
 ...
-ERRO[0011] thresholds on metrics 'http_req_duration' have been crossed 
+ERRO[0121] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
 📌 Unlike checks, thresholds affect the test result. When a threshold is crossed, k6 returns a non-zero exit code, allowing you to verify performance criteria with load tests in your CI/CD pipelines.
