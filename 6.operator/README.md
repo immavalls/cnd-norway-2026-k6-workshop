@@ -17,7 +17,15 @@ Run all commands from the repository root.
 If the workshop Docker Compose stack is still running and your laptop has limited memory, stop it before starting kind:
 
 ```bash
-docker compose down
+docker compose down -v
+```
+
+## Install kind
+
+This exercise uses [kind](https://kind.sigs.k8s.io/) (Kubernetes in Docker) to create a local cluster. If you don't have it installed, follow the [kind installation instructions](https://kind.sigs.k8s.io/docs/user/quick-start/#installation). Then verify that it works:
+
+```bash
+kind version
 ```
 
 ## Create the cluster
