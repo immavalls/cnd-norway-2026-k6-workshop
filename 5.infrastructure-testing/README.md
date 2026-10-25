@@ -53,15 +53,17 @@ docker compose exec k6 k6 run --out experimental-prometheus-rw 5.infrastructure-
 
 > The test uses the `k6/x/sql` extension. k6 v1.2 or later downloads it automatically the first time you run the test, so the first run needs internet access and may take a moment to start.
 
-The test runs for 5 minutes. While it runs, explore the results in Grafana.
+The test runs for 10 minutes. While it runs, explore the results in Grafana.
+
+> Metrics take a minute or so to appear. k6 sends its results every few seconds and PostgreSQL metrics are collected every 10 seconds, so the graphs show a point every 10 seconds, but rate-based panels need a few samples before they show data. Panels fill in gradually as the test runs.
 
 ## Explore the results in Grafana
 
 ### 1. Discover the metrics
 
-Open [Metrics Drilldown](http://localhost:3000/a/grafana-metricsdrilldown-app/drilldown?from=now-15m&to=now&refresh=5s&var-ds=prometheus) to discover PostgreSQL and [k6 built-in metrics](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/) as they arrive. The link shows the last 15 minutes and refreshes every 5 seconds. You can also use **Explore** to query them.
+Open [Metrics Drilldown](http://localhost:3000/a/grafana-metricsdrilldown-app/drilldown?from=now-15m&to=now&refresh=5s&var-ds=prometheus) to discover PostgreSQL and [k6 built-in metrics](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/) as they arrive. The link shows the last 15 minutes and refreshes every 5 seconds. Type `k6` in the search box to filter the k6 metrics. You can also use **Explore** to query them.
 
-<img src="./images/explore-k6-metrics.png" alt="Grafana Explore querying db and k6 metrics" width="600" />
+<img src="./images/explore-k6-metrics.png" alt="Metrics Drilldown filtered by k6 metrics" width="600" />
 
 ### 2. Check the standard k6 dashboard
 
@@ -93,6 +95,8 @@ Open the [k6 + PostgreSQL Performance Comparison](http://localhost:3000/d/k6-pos
 
 ![k6 PostgreSQL performance](./images/k6-postgresql-performance-dashboard.png)
 
+
+> **Why do the VUs show 0 or 1?** This test uses the `constant-arrival-rate` executor, and every iteration is a single SQL query that takes a few milliseconds. k6 only counts the VUs that are running an iteration at the moment it takes a sample, so the whole workload (about 125 iterations per second) can run with a single VU, and the **Active VUs** value is mostly 0 or 1. **Max VUs Reached** shows the 25 VUs that k6 pre-allocated, which stay idle until they're needed. This means the database handles the load easily: with this model, look at the iteration rate and the database metrics, not the VUs.
 
 Finally, explore the underlying k6 and `pg_stat_statements` metrics and queries. Try this challenge:
 
@@ -126,6 +130,17 @@ You don't need to save the dashboard to see the panel. The dashboard is provisio
 
 </details>
 
+
+## Optional: explore with Grafana Assistant
+
+This step is optional. You can connect your local Grafana to [Grafana Assistant](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/) in Grafana Cloud, the tool we used to generate the PostgreSQL dashboard, and ask it questions about your k6 and PostgreSQL metrics.
+
+1. Make sure you have a Grafana Cloud account with Grafana Assistant enabled. Check the [pricing page](https://grafana.com/pricing/#grafana-assistant) to see if your plan includes it.
+2. Follow the documentation: [Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/). You'll install the Grafana Assistant plugin in your local Grafana ([localhost:3000](http://localhost:3000/)) and connect it to your Grafana Cloud stack. The local Grafana in this workshop meets the version requirement.
+
+> The connection flow sends your local Grafana URL to Grafana Cloud. Skip this step if you prefer not to share it.
+
+No Grafana Cloud account? Explore [play.grafana.org](https://play.grafana.org/), the public Grafana demo environment, to see more example dashboards and what you can build with Grafana.
 
 ## Related Resources
 
