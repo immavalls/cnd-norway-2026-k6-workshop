@@ -51,17 +51,25 @@ The `k6` container is already configured to reach Prometheus and PostgreSQL, so 
 docker compose exec k6 k6 run --out experimental-prometheus-rw 5.infrastructure-testing/sql-db-k6-test.js
 ```
 
-The test runs for 5 minutes. While it runs, open [Metrics Drilldown](http://localhost:3000/a/grafana-metricsdrilldown-app/drilldown?from=now-15m&to=now&refresh=5s&var-ds=prometheus) in Grafana (it shows the last 15 minutes and refreshes every 5 seconds) to discover the PostgreSQL and k6 metrics as they arrive.
-
 > The test uses the `k6/x/sql` extension. k6 v1.2 or later downloads it automatically the first time you run the test, so the first run needs internet access and may take a moment to start.
 
-This demo includes a standard **[k6 Prometheus Dashboard](http://localhost:3000/d/k6-prometheus/k6-prometheus?from=now-15m&to=now&refresh=5s)** (last 15 minutes, refreshing every 5 seconds). It is designed for HTTP tests, so it displays primarily HTTP request data.
+The test runs for 5 minutes. While it runs, explore the results in Grafana.
 
-Because this test sends SQL queries instead of HTTP requests, the HTTP panels (requests, failures, request duration, latency and requests by URL) show **No data**. That is expected. In this dashboard, only the VUs and the checks panels show data for this test. To see the database side, use the custom dashboard described below.
+## Explore the results in Grafana
 
-In Grafana, use **Explore** or [**Drilldown Metrics**](http://localhost:3000/a/grafana-metricsdrilldown-app/drilldown?from=now-15m&to=now&refresh=5s&var-ds=prometheus) to discover PostgreSQL and [k6 built-in metrics](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/).
+### 1. Discover the metrics
+
+Open [Metrics Drilldown](http://localhost:3000/a/grafana-metricsdrilldown-app/drilldown?from=now-15m&to=now&refresh=5s&var-ds=prometheus) to discover PostgreSQL and [k6 built-in metrics](https://grafana.com/docs/k6/latest/using-k6/metrics/reference/) as they arrive. The link shows the last 15 minutes and refreshes every 5 seconds. You can also use **Explore** to query them.
 
 <img src="./images/explore-k6-metrics.png" alt="Grafana Explore querying db and k6 metrics" width="600" />
+
+### 2. Check the standard k6 dashboard
+
+Open the **[k6 Prometheus Dashboard](http://localhost:3000/d/k6-prometheus/k6-prometheus?from=now-15m&to=now&refresh=5s)**. It is a standard dashboard designed for HTTP tests, so most of its panels are built from HTTP request data.
+
+Because this test sends SQL queries instead of HTTP requests, the HTTP panels (requests, failures, request duration, latency and requests by URL) show **No data**. That is expected. Only the VUs and checks panels show data for this test.
+
+### 3. Explore the PostgreSQL dashboard
 
 Because this test generates database traffic instead of HTTP traffic, we asked Grafana Assistant to create a custom dashboard:
 
