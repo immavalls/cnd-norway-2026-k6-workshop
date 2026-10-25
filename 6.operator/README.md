@@ -20,12 +20,18 @@ If the workshop Docker Compose stack is still running and your laptop has limite
 docker compose down -v
 ```
 
-## Install kind
+## Install kind and kubectl
 
-This exercise uses [kind](https://kind.sigs.k8s.io/) (Kubernetes in Docker) to create a local cluster. If you don't have it installed, follow the [kind installation instructions](https://kind.sigs.k8s.io/docs/user/quick-start/#installation). Then verify that it works:
+This exercise uses [kind](https://kind.sigs.k8s.io/) (Kubernetes in Docker) to create a local cluster, and [kubectl](https://kubernetes.io/docs/reference/kubectl/) to interact with it. If you don't have them installed, follow the installation instructions:
+
+- [Install kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+- [Install kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+
+Then verify that both work:
 
 ```bash
 kind version
+kubectl version --client
 ```
 
 ## Create the cluster
@@ -39,7 +45,7 @@ kubectl config current-context
 
 The context should be `kind-k6-workshop`.
 
-Install the pinned k6 Operator v1.7.0 bundle, and wait for its controller to become available:
+Install the pinned [k6 Operator v1.7.0](https://github.com/grafana/k6-operator/releases/tag/v1.7.0) bundle, and wait for its controller to become available:
 
 ```bash
 kubectl apply --server-side -f https://raw.githubusercontent.com/grafana/k6-operator/v1.7.0/bundle.yaml
