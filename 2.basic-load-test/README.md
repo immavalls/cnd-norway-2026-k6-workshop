@@ -31,7 +31,7 @@ Now, update the previous `k6-test.js` test:
 
 2. In the test scenario, add a 1-second pause after ordering a pizza using [`sleep(1)`](https://grafana.com/docs/k6/latest/javascript-api/k6/sleep/). 
 
-When your `k6-test.js` is ready, run it with the `--out` option.
+When your `k6-test.js` is ready, run it with the `--out` option. Run the commands from the repository root.
 
 **k6 binary**
 
@@ -61,6 +61,30 @@ Finally, explore these common performance metrics:
 - **Request failed** (errors)
 
 Once you've finished the test, and reviewed the dashboard, close your browser tab. The k6 process waits to exit as long as there’s at least one open browser window for the dashboard extension.
+
+<details>
+<summary>Want to test the solution?</summary>
+
+The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). To run it instead of your own script, run the following command from the repository root:
+
+**k6 binary**
+
+```bash
+k6 run --out web-dashboard 2.basic-load-test/answer/k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard 2.basic-load-test/answer/k6-test.js
+```
+
+Open the dashboard while the test is running:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
+
+</details>
 
 ## Related Resources
 
