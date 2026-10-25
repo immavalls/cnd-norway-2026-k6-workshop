@@ -67,6 +67,16 @@ kubectl get deployment,service quickpizza
 
 The `quickpizza` ClusterIP Service exposes port 3333. Workloads in the same namespace can reach it at `http://quickpizza:3333`.
 
+### Check the deployment
+
+To check that QuickPizza is running in your cluster, forward its port to your machine:
+
+```bash
+kubectl port-forward svc/quickpizza 3333:3333
+```
+
+Open [http://localhost:3333](http://localhost:3333) in your browser. You should see the QuickPizza page. Then press `Ctrl+C` to stop the port forward. You don't need it for the rest of the exercise, because the k6 runners reach QuickPizza inside the cluster.
+
 ## Create and run the distributed test
 
 A ConfigMap makes the local test script available inside the runner Pods. Create it from the supplied script:
