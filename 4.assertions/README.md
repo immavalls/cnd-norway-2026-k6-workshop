@@ -42,19 +42,14 @@ Run the test when ready. Run the commands from the repository root.
 **k6 binary**
 
 ```bash
-k6 run --out web-dashboard k6-test.js
+k6 run k6-test.js
 ```
 
 **Docker**
 
 ```bash
-docker compose exec k6 k6 run --out web-dashboard k6-test.js
+docker compose exec k6 k6 run k6-test.js
 ```
-
-Open the web dashboard while the test is running:
-
-- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
-- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
 
 Verify the output in the terminal:
 
@@ -78,7 +73,19 @@ The [`http_req_duration`](https://grafana.com/docs/k6/latest/using-k6/metrics/re
 http_req_duration: ['p(95)<1000'], 
 ```
 
-Configure the threshold and run the test again. 
+Configure the threshold and run the test again:
+
+**k6 binary**
+
+```bash
+k6 run k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run k6-test.js
+```
 
 After the test finishes, check the `http_req_duration` results. The test should fail:
 
@@ -102,19 +109,14 @@ The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js).
 **k6 binary**
 
 ```bash
-k6 run --out web-dashboard 4.assertions/answer/k6-test.js
+k6 run 4.assertions/answer/k6-test.js
 ```
 
 **Docker**
 
 ```bash
-docker compose exec k6 k6 run --out web-dashboard 4.assertions/answer/k6-test.js
+docker compose exec k6 k6 run 4.assertions/answer/k6-test.js
 ```
-
-Open the dashboard while the test is running:
-
-- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
-- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
 
 The solution includes the `p(95)<1000` threshold, so with failure injection enabled the test is expected to fail the threshold.
 
