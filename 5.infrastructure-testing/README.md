@@ -123,7 +123,7 @@ Finally, explore the underlying k6 and `pg_stat_statements` metrics and queries.
 
 5. The panel still uses the unit of the one you copied (requests per second), but these values are rows per second. In the panel options, go to **Standard options > Unit** and search for `rows` to select **rows/sec**.
 6. Rename the panel to **Top 10 Statements by Rows Processed**, and go back to the dashboard.
-7. Compare the new panel with **Top 10 Statements by Execution Rate**. Is the statement that runs the most often also the one that processes the most rows?
+7. One statement processes far more rows than all the others. Hover over its line to see its `queryid`. Is it also the statement that runs most often in **Top 10 Statements by Execution Rate**? Check **Top 10 Statements by Avg Duration** to see whether it is also slow.
 
 > Pre-provisioned dashboards can't be saved. At most, you can use **Save as copy** to save your changes under a new name. For the workshop you don't need to save: you can still see and use the new panel while the dashboard is open.
 
