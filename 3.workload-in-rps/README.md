@@ -40,7 +40,7 @@ When your `k6-test.js` is ready, run it with the `--out` option.
 k6 run --out web-dashboard k6-test.js
 ```
 
-> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [how to run k6](../1.lab-setup/#choose-how-to-run-k6).
+> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [Lab setup](../1.lab-setup/#check-your-k6-installation).
 
 You can verify the generated workload in the terminal output:
 

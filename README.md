@@ -1,6 +1,6 @@
 # Load testing workshop with k6 OSS - Cloud Native Days Norway 2026
 
-[Workshop slide deck](https://speakerdeck.com/immavalls/shift-left-with-reliability-testing-a-hands-on-introduction-to-k6)
+[Workshop slide deck](https://speakerdeck.com/immavalls/shift-left-with-reliability-testing-a-hands-on-introduction-to-k6-7ccbce8a-0f70-4242-97aa-0c1c23fa9a0f)
 
 ## Hands-on lab flow
 

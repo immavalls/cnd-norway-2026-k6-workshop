@@ -43,7 +43,7 @@ Run the test when ready.
 k6 run --out web-dashboard k6-test.js
 ```
 
-> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [how to run k6](../1.lab-setup/#choose-how-to-run-k6).
+> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [Lab setup](../1.lab-setup/#check-your-k6-installation).
 
 Verify the output in the terminal:
 
