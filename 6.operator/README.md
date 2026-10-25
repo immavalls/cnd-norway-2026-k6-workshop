@@ -134,10 +134,10 @@ kubectl logs job/quickpizza-test-2
 In the summaries:
 
 - Both runners should show successful iterations and a 100% `status is 200` check.
-- The script configures a total arrival rate of 4 iterations per second for 15 seconds. 
+- The script configures a total arrival rate of 4 iterations per second for 1 minute. 
 - The operator has divided that rate across the two execution runners; it does not run 4 iterations per second on each runner. 
 
-If you add the `iterations` values from both summaries, you should get approximately 60, albeit with some possible variation.
+If you add the `iterations` values from both summaries, you should get approximately 240, albeit with some possible variation.
 
 ## Optional: compare one runner
 
@@ -154,7 +154,7 @@ kubectl apply -f 6.operator/testrun.yaml
 kubectl get testruns,jobs,pods --watch
 ```
 
-This run creates one runner Job, while the test still targets approximately 4 iterations per second and 60 total iterations. Delete the `TestRun` when you finish. Restore `parallelism: 2` if you want to keep the supplied file unchanged.
+This run creates one runner Job, while the test still targets approximately 4 iterations per second and 240 total iterations. Delete the `TestRun` when you finish. Restore `parallelism: 2` if you want to keep the supplied file unchanged.
 
 ## Troubleshooting
 
