@@ -106,8 +106,8 @@ Finally, explore the underlying k6 and `pg_stat_statements` metrics and queries.
 <summary>Show the solution step by step</summary>
 
 1. In the [k6 + PostgreSQL Performance Correlation](http://localhost:3000/d/k6-postgresql-performance/k6-2b-postgresql-performance-correlation?from=now-15m&to=now&refresh=5s) dashboard, expand the **PostgreSQL Performance** row.
-2. Find the **Top 10 Statements by Execution Rate** panel. Open its menu (hover over the panel title) and select **More... > Duplicate**. If you don't see the option, click **Edit** at the top right of the dashboard first.
-3. Open the new panel in edit mode, and look at its query:
+2. Find the **Top 10 Statements by Execution Rate** panel. Open its menu (hover over the panel title) and select **More... > Copy**. Then click **Edit** at the top right of the dashboard, and use **Add > Paste panel** to add a copy of the panel.
+3. Edit the pasted panel (open its menu and select **Edit**), and look at its query:
 
    ```promql
    topk(10, sum by(queryid) (rate(pg_stat_statements_calls_total{datname="$datname"}[$__rate_interval])))
@@ -121,12 +121,15 @@ Finally, explore the underlying k6 and `pg_stat_statements` metrics and queries.
    topk(10, sum by(queryid) (rate(pg_stat_statements_rows_total{datname="$datname"}[$__rate_interval])))
    ```
 
-5. Rename the panel to **Top 10 Statements by Rows Processed**, and go back to the dashboard.
-6. Compare the new panel with **Top 10 Statements by Execution Rate**. Is the statement that runs the most often also the one that processes the most rows?
+5. The panel still uses the unit of the one you copied (requests per second), but these values are rows per second. In the panel options, go to **Standard options > Unit** and search for `rows` to select **rows/sec**.
+6. Rename the panel to **Top 10 Statements by Rows Processed**, and go back to the dashboard.
+7. Compare the new panel with **Top 10 Statements by Execution Rate**. Is the statement that runs the most often also the one that processes the most rows?
 
-You don't need to save the dashboard to see the panel. The dashboard is provisioned, so Grafana may ask you to save a copy instead.
+> Pre-provisioned dashboards can't be saved. At most, you can use **Save as copy** to save your changes under a new name. For the workshop you don't need to save: you can still see and use the new panel while the dashboard is open.
 
-<!-- TODO: add a screenshot of the finished panel, for example ./images/top-10-statements-by-rows.png -->
+The result looks like this:
+
+<img src="./images/top-10-statements-by-rows.png" alt="Top 10 Statements by Rows Processed panel below Top 10 Statements by Execution Rate and Avg Duration" width="800" />
 
 </details>
 
@@ -135,7 +138,7 @@ You don't need to save the dashboard to see the panel. The dashboard is provisio
 
 This step is optional. You can connect your local Grafana to [Grafana Assistant](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/) in Grafana Cloud, the tool we used to generate the PostgreSQL dashboard, and ask it questions about your k6 and PostgreSQL metrics.
 
-1. Make sure you have a Grafana Cloud account with Grafana Assistant enabled. Check the [pricing page](https://grafana.com/pricing/#grafana-assistant) to see if your plan includes it.
+1. Create a [free Grafana Cloud account](https://grafana.com/auth/sign-up/create-user) if you don't have one. The free tier includes Grafana Assistant. See the [pricing page](https://grafana.com/pricing/#grafana-assistant) for the usage limits.
 2. Follow the documentation: [Enable Assistant in Grafana OSS](https://grafana.com/docs/grafana-cloud/machine-learning/assistant/get-started/self-managed/). You'll install the Grafana Assistant plugin in your local Grafana ([localhost:3000](http://localhost:3000/)) and connect it to your Grafana Cloud stack. The local Grafana in this workshop meets the version requirement.
 
 > The connection flow sends your local Grafana URL to Grafana Cloud. Skip this step if you prefer not to share it.
