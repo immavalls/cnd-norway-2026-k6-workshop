@@ -25,7 +25,7 @@ In practice, traffic usually ramps up over time. You can model this behavior usi
 
 A common recommendation is to spend between 5% to 10% of the total duration to ramp up and ramp down the load.
 
-Now, update the previous `k6-test.js` test:
+Now, update the previous `k6-test.js` test, the file at the root of the repository:
 
 1. Use the [`stages`](https://grafana.com/docs/k6/latest/using-k6/k6-options/reference/#stages) k6 option to configure a ramping load pattern, with a total duration of `1m`.
 
@@ -65,7 +65,7 @@ Once you've finished the test, and reviewed the dashboard, close your browser ta
 <details>
 <summary>Want to test the solution?</summary>
 
-The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). To run it instead of your own script, run the following command from the repository root:
+The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). It's a separate file: it doesn't replace your `k6-test.js` at the root of the repository, and you run it by its path. Run the following command from the repository root:
 
 **k6 binary**
 

@@ -61,7 +61,7 @@ You can run k6 in two ways. Pick one and use it for all the exercises. Run both 
 
 ### Option 2: Docker
 
-No installation needed. `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. The commands are the same on Linux, macOS and Windows.
+No installation needed. `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. The commands are the same on Linux, macOS and Windows. `docker compose exec` always runs from the repository root, whichever folder your terminal is in.
 
 1. Check the version:
 
@@ -128,6 +128,8 @@ docker compose exec k6 k6 run -e BASE_URL=https://quickpizza.grafana.com k6-test
 The output should look the same as above, with `1/1 iters` and `http_req_failed` at `0.00%`.
 
 </details>
+
+> **Keep editing this script.** From here on, you'll keep editing the `k6-test.js` file at the root of the repository, the one you just ran. Run all the commands from the repository root.
 
 You'll continue building on this k6 script in the next exercises.
 
