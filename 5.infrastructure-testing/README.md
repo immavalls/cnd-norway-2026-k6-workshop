@@ -94,7 +94,37 @@ Open the [k6 + PostgreSQL Performance Comparison](http://localhost:3000/d/k6-pos
 ![k6 PostgreSQL performance](./images/k6-postgresql-performance-dashboard.png)
 
 
-Finally, edit any panel to explore the underlying k6 and `pg_stat_statements` metrics and queries.
+Finally, explore the underlying k6 and `pg_stat_statements` metrics and queries. Try this challenge:
+
+> **Which SQL statements process the most rows?** Duplicate the **Top 10 Statements by Execution Rate** panel and change it to rank the statements by rows processed instead.
+
+<details>
+<summary>Show the solution step by step</summary>
+
+1. In the [k6 + PostgreSQL Performance Correlation](http://localhost:3000/d/k6-postgresql-performance/k6-2b-postgresql-performance-correlation?from=now-15m&to=now&refresh=5s) dashboard, expand the **PostgreSQL Performance** row.
+2. Find the **Top 10 Statements by Execution Rate** panel. Open its menu (hover over the panel title) and select **More... > Duplicate**. If you don't see the option, click **Edit** at the top right of the dashboard first.
+3. Open the new panel in edit mode, and look at its query:
+
+   ```promql
+   topk(10, sum by(queryid) (rate(pg_stat_statements_calls_total{datname="$datname"}[$__rate_interval])))
+   ```
+
+   `pg_stat_statements_calls_total` counts how many times each statement is executed.
+
+4. Change the metric to `pg_stat_statements_rows_total`, which counts the rows each statement returns or affects:
+
+   ```promql
+   topk(10, sum by(queryid) (rate(pg_stat_statements_rows_total{datname="$datname"}[$__rate_interval])))
+   ```
+
+5. Rename the panel to **Top 10 Statements by Rows Processed**, and go back to the dashboard.
+6. Compare the new panel with **Top 10 Statements by Execution Rate**. Is the statement that runs the most often also the one that processes the most rows?
+
+You don't need to save the dashboard to see the panel. The dashboard is provisioned, so Grafana may ask you to save a copy instead.
+
+<!-- TODO: add a screenshot of the finished panel, for example ./images/top-10-statements-by-rows.png -->
+
+</details>
 
 
 ## Related Resources
