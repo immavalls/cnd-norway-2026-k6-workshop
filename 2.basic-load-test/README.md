@@ -33,11 +33,17 @@ Now, update the previous `k6-test.js` test:
 
 When your `k6-test.js` is ready, run it with the `--out` option.
 
+**k6 binary**
+
 ```bash
 k6 run --out web-dashboard k6-test.js
 ```
 
-> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [Lab setup](../1.lab-setup/#check-your-k6-installation).
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard k6-test.js
+```
 
 The `--out web-dashboard` option displays metrics in a simple web dashboard so you can watch test results in real time. Visit [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/).
 

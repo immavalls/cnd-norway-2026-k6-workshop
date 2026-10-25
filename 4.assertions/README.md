@@ -39,11 +39,17 @@ Implement a k6 check that reports successful responses (`status === 200`) with a
 
 Run the test when ready.
 
+**k6 binary**
+
 ```bash
 k6 run --out web-dashboard k6-test.js
 ```
 
-> Running k6 with Docker? Use `docker compose exec k6 k6 run --out web-dashboard k6-test.js`. See [Lab setup](../1.lab-setup/#check-your-k6-installation).
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard k6-test.js
+```
 
 Verify the output in the terminal:
 

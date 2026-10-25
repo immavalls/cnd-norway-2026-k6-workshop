@@ -75,7 +75,7 @@ No installation needed. `docker compose up -d` already started a `k6` container 
    docker compose exec k6 k6 run k6-test.js
    ```
 
-> In all the next exercises, if you use Docker, run `docker compose exec k6 k6 ...` wherever the exercises show `k6 ...`.
+The next exercises show the commands for both options. Use the one you picked.
 
 ### Check the output
 

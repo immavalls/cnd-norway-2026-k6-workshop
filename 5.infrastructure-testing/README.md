@@ -23,13 +23,9 @@ The `teardown()` function runs after the test completes and returns the database
 
 Run the test with the `--out experimental-prometheus-rw` option to send k6 results to Prometheus. Run it from the repository root.
 
-If you use Docker, the `k6` container is already configured to reach Prometheus and PostgreSQL:
+**k6 binary**
 
-```bash
-docker compose exec k6 k6 run --out experimental-prometheus-rw 5.infrastructure-testing/sql-db-k6-test.js
-```
-
-If you use the k6 binary, first tell k6 where Prometheus is listening:
+First tell k6 where Prometheus is listening:
 
 ```bash
 # Linux and macOS
@@ -45,6 +41,14 @@ Then run the test:
 
 ```bash
 k6 run --out experimental-prometheus-rw 5.infrastructure-testing/sql-db-k6-test.js
+```
+
+**Docker**
+
+The `k6` container is already configured to reach Prometheus and PostgreSQL, so you can run the test directly:
+
+```bash
+docker compose exec k6 k6 run --out experimental-prometheus-rw 5.infrastructure-testing/sql-db-k6-test.js
 ```
 
 > The test uses the `k6/x/sql` extension. k6 v1.2 or later downloads it automatically the first time you run the test, so the first run needs internet access and may take a moment to start.
