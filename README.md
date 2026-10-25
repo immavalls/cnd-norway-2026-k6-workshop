@@ -34,9 +34,9 @@ By the end of this workshop, you will learn the fundamentals of load testing and
 
 ## Pre-requisites
 
-In order to participate in the lab, you must have a laptop with Wi-Fi/Internet connectivity, running Linux/MacOS/Windows.
+To participate in the lab, you must have a laptop with Wi-Fi/Internet connectivity running Linux/MacOS/Windows.
 
-We recommend running `docker compose pull` before the workshop: the images are large and conference Wi-Fi is slow.
+We recommend running `docker compose pull` before the workshop: the images are large, and conference Wi-Fi could be slow depending on the number of attendees.
 
 The following also needs to be installed:
 - An IDE installed to write k6 scripts
