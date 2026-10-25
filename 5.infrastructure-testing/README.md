@@ -55,7 +55,7 @@ docker compose exec k6 k6 run --out experimental-prometheus-rw 5.infrastructure-
 
 The test runs for 10 minutes. While it runs, explore the results in Grafana.
 
-> Metrics take a minute or so to appear. k6 sends its results every few seconds and PostgreSQL metrics are collected every 10 seconds, so the graphs show a point every 10 seconds, but rate-based panels need a few samples before they show data. Panels fill in gradually as the test runs.
+> Metrics take a few minutes to appear. k6 sends its results every few seconds and PostgreSQL metrics are collected every 10 seconds, but the Prometheus data source in Grafana is configured with a 1-minute scrape interval, so the graphs show about one point per minute. Panels fill in gradually as the test runs, and a 10-minute run gives you around 10 points per panel.
 
 ## Explore the results in Grafana
 
