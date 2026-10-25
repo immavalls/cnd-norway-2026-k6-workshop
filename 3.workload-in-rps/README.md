@@ -76,7 +76,24 @@ The exact numbers will differ slightly on your machine. On the **default ✓** r
 
 🔍 If so, review the test scenario and find what could cause requests to execute at a slower pace.
 
-After fixing it, run the test again.
+After fixing it, run the test again:
+
+**k6 binary**
+
+```bash
+k6 run --out web-dashboard k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard k6-test.js
+```
+
+Open the dashboard while the test is running:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
 
 <details>
 <summary>Want to test the solution?</summary>
