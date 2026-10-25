@@ -11,7 +11,7 @@ One approach is to gradually increase load until the system starts failing. For 
 Uncomment the following lines in [compose.yaml](../compose.yaml):
 
 ```yml
-      # QUICKPIZZA_DELAY_RECOMMENDATIONS: 1000
+      # QUICKPIZZA_DELAY_RECOMMENDATIONS: "1s"
       # QUICKPIZZA_FAIL_RATE_RECOMMENDATIONS_API_PIZZA_POST: 5
 ```
 
@@ -23,7 +23,7 @@ docker compose down -v && docker compose up -d
 
 QuickPizza now returns occasional errors and slower responses.
 
-To make the code fault-tolerant, wrap up the `console.log` statement as follows:
+To make the code fault-tolerant, update the `k6-test.js` file at the root of the repository and wrap up the `console.log` statement as follows:
 
 ```js
 if (res.status=== 200) {
@@ -37,24 +37,34 @@ if (res.status=== 200) {
 
 Implement a k6 check that reports successful responses (`status === 200`) with a custom message.
 
-Run the test when ready.
+To keep the workshop moving, reduce the test `duration` to `20s` in your `k6-test.js`.
+
+Run the test when ready. Run the commands from the repository root.
+
+**k6 binary**
 
 ```bash
-k6 run --out web-dashboard k6-test.js
+k6 run k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run k6-test.js
 ```
 
 Verify the output in the terminal:
 
-- The check should report roughly 95% successful responses and appear with a ❌ status.
+- The test runs for 20 seconds. The check should report roughly 95% successful responses and appear with a ❌ status.
 - The test should complete successfully and k6 returns a zero exit code.
 
 ```bash
     ✗ status is 200
-      ↳  95% — ✓ 288 / ✗ 13
+      ↳  95% — ✓ 570 / ✗ 30
 
 ...
 
-default ✓ [======================================] 00/50 VUs  10s  30.00 iters/s
+default ✓ [======================================] 00/50 VUs  20s  30.00 iters/s
 ```
 
 Now, add a [k6 threshold](https://grafana.com/docs/k6/latest/using-k6/thresholds/) to verify that at least 95% of responses complete in under 1 second. 
@@ -65,7 +75,19 @@ The [`http_req_duration`](https://grafana.com/docs/k6/latest/using-k6/metrics/re
 http_req_duration: ['p(95)<1000'], 
 ```
 
-Configure the threshold and run the test again. 
+Configure the threshold and run the test again:
+
+**k6 binary**
+
+```bash
+k6 run k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run k6-test.js
+```
 
 After the test finishes, check the `http_req_duration` results. The test should fail:
 
@@ -73,13 +95,52 @@ After the test finishes, check the `http_req_duration` results. The test should 
 ...
 http_req_duration..............: avg=1.13s min=1s med=1.1s max=1.65s p(90)=1.26s p(95)=1.34s
 ...
-ERRO[0011] thresholds on metrics 'http_req_duration' have been crossed 
+ERRO[0021] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
 📌 Unlike checks, thresholds affect the test result. When a threshold is crossed, k6 returns a non-zero exit code, allowing you to verify performance criteria with load tests in your CI/CD pipelines.
 
 
 If you have extra time, update the latency threshold until the test passes.
+
+<details>
+<summary>Want to test the solution?</summary>
+
+The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). It's a separate file: it doesn't replace your `k6-test.js` at the root of the repository, and you run it by its path. Run the following command from the repository root:
+
+**k6 binary**
+
+```bash
+k6 run 4.assertions/answer/k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run 4.assertions/answer/k6-test.js
+```
+
+The solution includes the `p(95)<1000` threshold, so with failure injection enabled the test is expected to fail the threshold.
+
+</details>
+
+## Clean up
+
+When you finish, return QuickPizza to its normal behavior:
+
+1. Comment out the two lines you uncommented in [compose.yaml](../compose.yaml):
+
+   ```yml
+         # QUICKPIZZA_DELAY_RECOMMENDATIONS: "1s"
+         # QUICKPIZZA_FAIL_RATE_RECOMMENDATIONS_API_PIZZA_POST: 5
+   ```
+
+2. Restart your local environment:
+
+   ```bash
+   docker compose down -v && docker compose up -d
+   ```
+
 
 
 

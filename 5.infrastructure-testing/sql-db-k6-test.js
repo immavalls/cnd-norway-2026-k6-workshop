@@ -10,14 +10,16 @@ import driver from "k6/x/sql/driver/postgres";
 import { check } from "k6";
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.2.0/index.js";
 
-const db = sql.open(driver, "postgres://postgres:postgres@localhost:5432/quickpizza_db?sslmode=disable");
+const DB_HOST = __ENV.DB_HOST || "localhost";
+
+const db = sql.open(driver, `postgres://postgres:postgres@${DB_HOST}:5432/quickpizza_db?sslmode=disable`);
 
 export const options = {
   scenarios: {
     // Read-heavy: list ingredients
     list_ingredients: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "10m",
       rate: 50,
       timeUnit: "1s",
       preAllocatedVUs: 10,
@@ -26,7 +28,7 @@ export const options = {
     // Read: random pizza lookup
     get_pizza: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "10m",
       rate: 55,
       timeUnit: "1s",
       preAllocatedVUs: 10,
@@ -35,7 +37,7 @@ export const options = {
     // Write: insert a rating for a random seeded pizza
     insert_rating: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "10m",
       rate: 20,
       timeUnit: "1s",
       preAllocatedVUs: 5,

@@ -23,21 +23,34 @@ In practice, traffic usually ramps up over time. You can model this behavior usi
 
 <img src="./images/ramping-load-test.png" alt="Workload with ramping pattern" width="400" />
 
-A common recommendation is to spend between between 5% to 10% of the total duration to ramp up and ramp down the load.
+A common recommendation is to spend between 5% to 10% of the total duration to ramp up and ramp down the load.
 
-Now, update the previous `k6-test.js` test:
+Now, update the previous `k6-test.js` test, the file at the root of the repository:
 
-1. Use the [`stages` k6 option](https://grafana.com/docs/k6/latest/using-k6/k6-options/reference/#stages) to configure a ramping load pattern, with a total duration of `1m`.
+1. Use the [`stages`](https://grafana.com/docs/k6/latest/using-k6/k6-options/reference/#stages) k6 option to configure a ramping load pattern, with a total duration of `1m`.
 
 2. In the test scenario, add a 1-second pause after ordering a pizza using [`sleep(1)`](https://grafana.com/docs/k6/latest/javascript-api/k6/sleep/). 
 
-When your `k6-test.js` is ready, run it with the `--out` option.
+When your `k6-test.js` is ready, run it with the `--out` option. Run the commands from the repository root.
+
+**k6 binary**
 
 ```bash
 k6 run --out web-dashboard k6-test.js
 ```
 
-The `--out web-dashboard` option displays metrics in a simple web dashboard so you can watch test results in real time. Visit [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/).
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard k6-test.js
+```
+
+The `--out web-dashboard` option displays metrics in a simple web dashboard so you can watch test results in real time. Open the dashboard as soon as the test starts:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
+
+The dashboard is only available while the test is running. If the page doesn't load (for example, `connection reset`), the test has already finished: run it again and open the dashboard right away.
 
 ![k6 web dashboard](./images/k6-web-dashboard.png)
 
@@ -49,11 +62,37 @@ Finally, explore these common performance metrics:
 
 Once you've finished the test, and reviewed the dashboard, close your browser tab. The k6 process waits to exit as long as there’s at least one open browser window for the dashboard extension.
 
+<details>
+<summary>Want to test the solution?</summary>
+
+The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). It's a separate file: it doesn't replace your `k6-test.js` at the root of the repository, and you run it by its path. Run the following command from the repository root:
+
+**k6 binary**
+
+```bash
+k6 run --out web-dashboard 2.basic-load-test/answer/k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard 2.basic-load-test/answer/k6-test.js
+```
+
+Open the dashboard while the test is running:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
+
+</details>
+
 ## Related Resources
 
 - [k6 Documentation: Get started](https://grafana.com/docs/k6/latest/get-started/)
 - [k6 Documentation: Load test types](https://grafana.com/docs/k6/latest/testing-guides/test-types/)
 - [k6 Documentation: Web dashboard](https://grafana.com/docs/k6/latest/results-output/web-dashboard/)
+
+If you get stuck, compare with the [solution](./answer/k6-test.js).
 
 ---
 

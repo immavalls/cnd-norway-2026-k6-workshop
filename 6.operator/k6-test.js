@@ -7,7 +7,7 @@ export const options = {
   scenarios: {
     quickpizza: {
       executor: "constant-arrival-rate",
-      duration: "15s",
+      duration: "1m",
       rate: 4,
       timeUnit: "1s",
       preAllocatedVUs: 4,
