@@ -37,6 +37,8 @@ if (res.status=== 200) {
 
 Implement a k6 check that reports successful responses (`status === 200`) with a custom message.
 
+To keep the workshop moving, reduce the test `duration` to `20s` in your `k6-test.js`.
+
 Run the test when ready. Run the commands from the repository root.
 
 **k6 binary**
@@ -53,16 +55,16 @@ docker compose exec k6 k6 run k6-test.js
 
 Verify the output in the terminal:
 
-- The test runs for 2 minutes. The check should report roughly 95% successful responses and appear with a ❌ status.
+- The test runs for 20 seconds. The check should report roughly 95% successful responses and appear with a ❌ status.
 - The test should complete successfully and k6 returns a zero exit code.
 
 ```bash
     ✗ status is 200
-      ↳  95% — ✓ 3420 / ✗ 180
+      ↳  95% — ✓ 570 / ✗ 30
 
 ...
 
-default ✓ [======================================] 00/50 VUs  2m0s  30.00 iters/s
+default ✓ [======================================] 00/50 VUs  20s  30.00 iters/s
 ```
 
 Now, add a [k6 threshold](https://grafana.com/docs/k6/latest/using-k6/thresholds/) to verify that at least 95% of responses complete in under 1 second. 
@@ -93,7 +95,7 @@ After the test finishes, check the `http_req_duration` results. The test should 
 ...
 http_req_duration..............: avg=1.13s min=1s med=1.1s max=1.65s p(90)=1.26s p(95)=1.34s
 ...
-ERRO[0121] thresholds on metrics 'http_req_duration' have been crossed 
+ERRO[0021] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
 📌 Unlike checks, thresholds affect the test result. When a threshold is crossed, k6 returns a non-zero exit code, allowing you to verify performance criteria with load tests in your CI/CD pipelines.
@@ -121,6 +123,24 @@ docker compose exec k6 k6 run 4.assertions/answer/k6-test.js
 The solution includes the `p(95)<1000` threshold, so with failure injection enabled the test is expected to fail the threshold.
 
 </details>
+
+## Clean up
+
+When you finish, return QuickPizza to its normal behavior:
+
+1. Comment out the two lines you uncommented in [compose.yaml](../compose.yaml):
+
+   ```yml
+         # QUICKPIZZA_DELAY_RECOMMENDATIONS: "1s"
+         # QUICKPIZZA_FAIL_RATE_RECOMMENDATIONS_API_PIZZA_POST: 5
+   ```
+
+2. Restart your local environment:
+
+   ```bash
+   docker compose down -v && docker compose up -d
+   ```
+
 
 
 
