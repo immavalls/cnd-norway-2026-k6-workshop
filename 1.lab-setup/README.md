@@ -55,7 +55,7 @@ k6 version
 docker compose exec k6 k6 version
 ```
 
-The output should look similar to `k6 v2.1.0 (commit/..., go1.26.4, linux/arm64)`.
+The output should look similar to `k6 v2.3.0 (commit/..., go1.27.1, linux/arm64)`.
 
 If you use Docker, run `docker compose exec k6 k6 ...` wherever the exercises show `k6 ...`. For example, `k6 run k6-test.js` becomes `docker compose exec k6 k6 run k6-test.js`. The command is the same on Linux, macOS and Windows.
 
