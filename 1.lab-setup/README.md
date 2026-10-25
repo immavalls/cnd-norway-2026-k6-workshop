@@ -41,48 +41,93 @@ QuickPizza should now be running at [localhost:3333](http://localhost:3333/). Th
 
 ## Check your k6 installation
 
-You can run k6 in two ways. Pick one and use it for all the exercises.
+You can run k6 in two ways. Pick one and use it for all the exercises. Run both checks below: the version check, and a first test against QuickPizza.
 
-**Option 1: k6 binary.** [Install k6 OSS](https://grafana.com/docs/k6/latest/set-up/install-k6/) with your operating system's package manager. You might need to open a new terminal session so it picks up the updated `PATH`. Then verify it:
+### Option 1: k6 binary
 
-```bash
-k6 version
+[Install k6 OSS](https://grafana.com/docs/k6/latest/set-up/install-k6/) with your operating system's package manager. You might need to open a new terminal session so it picks up the updated `PATH`.
+
+1. Check the version:
+
+   ```bash
+   k6 version
+   ```
+
+2. Run the test:
+
+   ```bash
+   k6 run k6-test.js
+   ```
+
+### Option 2: Docker
+
+No installation needed. `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. The commands are the same on Linux, macOS and Windows.
+
+1. Check the version:
+
+   ```bash
+   docker compose exec k6 k6 version
+   ```
+
+2. Run the test:
+
+   ```bash
+   docker compose exec k6 k6 run k6-test.js
+   ```
+
+> In all the next exercises, if you use Docker, run `docker compose exec k6 k6 ...` wherever the exercises show `k6 ...`.
+
+### Check the output
+
+The version check should print something similar to the following. Your version number and platform may differ:
+
+```
+k6 v2.3.0 (commit/e088784614, go1.27.1, linux/arm64)
 ```
 
-**Option 2: Docker.** No installation needed. `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. Verify it:
+The test should print a randomly generated pizza name, and finish with `1/1 iters` and no failed requests. The pizza name, timings and sizes will differ:
 
-```bash
-docker compose exec k6 k6 version
+```
+     execution: local
+        script: k6-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1 max VUs, 10m30s max duration (incl. graceful stop):
+              * default: 1 iterations for each of 1 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+time="2026-10-25T12:06:04Z" level=info msg="The Mushy Romana (5 ingredients)" source=console
+
+  █ TOTAL RESULTS
+
+    HTTP
+    http_req_duration..............: avg=13.79ms min=13.79ms med=13.79ms max=13.79ms p(90)=13.79ms p(95)=13.79ms
+    http_req_failed................: 0.00% 0 out of 1
+    http_reqs......................: 1     61.495887/s
+...
+running (00m00.0s), 0/1 VUs, 1 complete and 0 interrupted iterations
+default ✓ [ 100% ] 1 VUs  00m00.0s/10m0s  1/1 iters, 1 per VU
 ```
 
-The output should look similar to `k6 v2.3.0 (commit/..., go1.27.1, linux/arm64)`.
-
-If you use Docker, run `docker compose exec k6 k6 ...` wherever the exercises show `k6 ...`. For example, `k6 run k6-test.js` becomes `docker compose exec k6 k6 run k6-test.js`. The command is the same on Linux, macOS and Windows.
-
-Next, run a basic k6 test to verify your test environment:
-
-```bash
-k6 run k6-test.js
-```
+If `http_req_failed` is not `0.00%`, QuickPizza isn't reachable. Check that `docker compose ps` shows all the containers as running, then ask for help.
 
 <details>
 <summary>Alternative: run the test against a remote testing environment</summary>
 
+If the local QuickPizza is not working, run the same checks against the shared environment. Run the version check as above, then the test:
+
 ```bash
+# k6 binary
 k6 run -e BASE_URL=https://quickpizza.grafana.com k6-test.js
 ```
 
-With Docker, add the prefix: `docker compose exec k6 k6 run -e BASE_URL=https://quickpizza.grafana.com k6-test.js`
+```bash
+# Docker
+docker compose exec k6 k6 run -e BASE_URL=https://quickpizza.grafana.com k6-test.js
+```
+
+The output should look the same as above, with `1/1 iters` and `http_req_failed` at `0.00%`.
 
 </details>
-
-The output should look similar to:
-
-```bash
-...
-running (00m00.1s), 0/1 VUs, 1 complete and 0 interrupted iterations
-default ✓ [======================================] 1 VUs  00m00.1s/10m0s  1/1 iters, 1 per VU
-```
 
 You'll continue building on this k6 script in the next exercises.
 
