@@ -41,29 +41,23 @@ QuickPizza should now be running at [localhost:3333](http://localhost:3333/). Th
 
 ## Check your k6 installation
 
-Verify that you can run k6 with one of the following options.
+You can run k6 in two ways. Pick one and use it for all the exercises.
 
-**k6 binary (Linux and macOS)**: [install k6 OSS](https://grafana.com/docs/k6/latest/set-up/install-k6/) with your operating system's package manager. You might need to open a new terminal session so it picks up the updated `PATH`.
+**Option 1: k6 binary.** [Install k6 OSS](https://grafana.com/docs/k6/latest/set-up/install-k6/) with your operating system's package manager. You might need to open a new terminal session so it picks up the updated `PATH`. Then verify it:
 
 ```bash
 k6 version
 ```
 
-**Docker (Linux and macOS)**: no installation needed.
+**Option 2: Docker.** No installation needed. `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. Verify it:
 
 ```bash
-docker run --rm -u $(id -u) -v $PWD:/app -w /app grafana/k6 version
-```
-
-**Docker (Windows PowerShell)**:
-
-```powershell
-docker run --rm -i -v ${PWD}:/app -w /app grafana/k6 version
+docker compose exec k6 k6 version
 ```
 
 The output should look similar to `k6 v2.1.0 (commit/..., go1.26.4, linux/arm64)`.
 
-> **Running tests with Docker?** `docker compose up -d` already started a `k6` container with this repository mounted and connected to QuickPizza and Grafana. In the exercises, run `docker compose exec k6 k6 ...` instead of `k6 ...`. For example, `docker compose exec k6 k6 run k6-test.js`.
+If you use Docker, run `docker compose exec k6 k6 ...` wherever the exercises show `k6 ...`. For example, `k6 run k6-test.js` becomes `docker compose exec k6 k6 run k6-test.js`. The command is the same on Linux, macOS and Windows.
 
 Next, run a basic k6 test to verify your test environment:
 
