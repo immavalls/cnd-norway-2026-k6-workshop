@@ -23,7 +23,7 @@ docker compose down -v && docker compose up -d
 
 QuickPizza now returns occasional errors and slower responses.
 
-To make the code fault-tolerant, wrap up the `console.log` statement as follows:
+To make the code fault-tolerant, update the `k6-test.js` file at the root of the repository and wrap up the `console.log` statement as follows:
 
 ```js
 if (res.status=== 200) {
@@ -37,7 +37,7 @@ if (res.status=== 200) {
 
 Implement a k6 check that reports successful responses (`status === 200`) with a custom message.
 
-Run the test when ready.
+Run the test when ready. Run the commands from the repository root.
 
 **k6 binary**
 
@@ -50,6 +50,11 @@ k6 run --out web-dashboard k6-test.js
 ```bash
 docker compose exec k6 k6 run --out web-dashboard k6-test.js
 ```
+
+Open the web dashboard while the test is running:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
 
 Verify the output in the terminal:
 
@@ -89,7 +94,31 @@ ERRO[0011] thresholds on metrics 'http_req_duration' have been crossed
 
 If you have extra time, update the latency threshold until the test passes.
 
-If you get stuck, compare with the [solution](./answer/k6-test.js).
+<details>
+<summary>Want to test the solution?</summary>
+
+The solution for this exercise is in [`answer/k6-test.js`](./answer/k6-test.js). It's a separate file: it doesn't replace your `k6-test.js` at the root of the repository, and you run it by its path. Run the following command from the repository root:
+
+**k6 binary**
+
+```bash
+k6 run --out web-dashboard 4.assertions/answer/k6-test.js
+```
+
+**Docker**
+
+```bash
+docker compose exec k6 k6 run --out web-dashboard 4.assertions/answer/k6-test.js
+```
+
+Open the dashboard while the test is running:
+
+- **k6 binary**: [http://127.0.0.1:5665/ui/](http://127.0.0.1:5665/ui/)
+- **Docker**: [http://127.0.0.1:5666/ui/](http://127.0.0.1:5666/ui/)
+
+The solution includes the `p(95)<1000` threshold, so with failure injection enabled the test is expected to fail the threshold.
+
+</details>
 
 
 
