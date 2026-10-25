@@ -19,7 +19,7 @@ export const options = {
     // Read-heavy: list ingredients
     list_ingredients: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "5m",
       rate: 50,
       timeUnit: "1s",
       preAllocatedVUs: 10,
@@ -28,7 +28,7 @@ export const options = {
     // Read: random pizza lookup
     get_pizza: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "5m",
       rate: 55,
       timeUnit: "1s",
       preAllocatedVUs: 10,
@@ -37,7 +37,7 @@ export const options = {
     // Write: insert a rating for a random seeded pizza
     insert_rating: {
       executor: "constant-arrival-rate",
-      duration: "3m",
+      duration: "5m",
       rate: 20,
       timeUnit: "1s",
       preAllocatedVUs: 5,
