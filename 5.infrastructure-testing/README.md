@@ -145,6 +145,16 @@ This step is optional. You can connect your local Grafana to [Grafana Assistant]
 
 No Grafana Cloud account? Explore [play.grafana.org](https://play.grafana.org/), the public Grafana demo environment, to see more example dashboards and what you can build with Grafana.
 
+## Clean up
+
+When you finish exploring, stop the containers and remove their volumes from the repository root:
+
+```bash
+docker compose down -v
+```
+
+> The next exercise runs on a local Kubernetes cluster and doesn't need the Docker Compose stack. If you want to run this exercise again later, start the stack with `docker compose up -d`.
+
 ## Related Resources
 
 - [github.com/grafana/xk6-sql](https://github.com/grafana/xk6-sql)
